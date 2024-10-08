@@ -16,7 +16,9 @@ public class CrabWorld extends World
     private void prepareScene()
     {
         // instantiate new objects
+        Crab crab = new Crab();
         
         // add them to the world
+        addObject(crab, 100, 100);
     }
 }
