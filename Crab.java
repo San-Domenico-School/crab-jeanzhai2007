@@ -13,6 +13,8 @@ public class Crab extends Actor
     public void act()
     {
         keyInput();
+        turnAtEdge();
+        checkForCollisions();
     }
     
     public void keyInput()
@@ -38,30 +40,37 @@ public class Crab extends Actor
         }
     }
     
-    public void turnAtEdge() {
-        if (isAtEdge()) {
+    public void turnAtEdge() 
+    {
+        if (isAtEdge()) 
+        {
             turn(180);
         }
     }
     
- private void checkForCollisions()
-{
-    // Check for collision with Lobster
-    if (isTouching(Lobster.class))
+    private void checkForCollisions()
     {
-        Greenfoot.playSound("au.wav");
-        Greenfoot.stop();
-        // Corrected showText call, specifying x and y positions
-        getWorld().showText("You Lost!", getWorld().getWidth() / 2, getWorld().getHeight() / 2); // Position at center
+        // Check for collision with Lobster
+        if (isTouching(Lobster.class))
+        {
+            Greenfoot.playSound("au.wav");
+            Greenfoot.stop();
+            // Corrected showText call, specifying x and y positions
+            getWorld().showText("You Lost!", getWorld().getWidth() / 2, getWorld().getHeight() / 2); // Position at center
+        }
+    
+        // Check for collision with Worm
+        if (isTouching(Worm.class)) 
+        {
+            removeTouching(Worm.class);  // Remove the worm from the world
+        }
+    
+            // Check if all worms are gone
+        if (getWorld().getObjects(Worm.class).isEmpty())
+        {
+                Greenfoot.stop();  // End the game if no worms remain
+                System.out.println("You Won!");
+                
+        }
     }
-
-    // Check for collision with Worm
-    if (isTouching(Worm.class)) {
-        removeTouching(Worm.class);  // Remove the worm from the world
-
-        // Check if all worms are gone
-        if (getWorld().getObjects(Worm.class).isEmpty()) {
-            Greenfoot.stop();  // End the game if no worms remain
-            System.out.println("You Won!");
 }
-
